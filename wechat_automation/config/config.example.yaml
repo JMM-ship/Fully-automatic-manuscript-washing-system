@@ -1,0 +1,25 @@
+# API配置
+gemini:
+  api_key: "YOUR_GEMINI_API_KEY"  # 请替换为您的Gemini API密钥
+  model: "gemini-2.0-flash-exp"  # 使用Gemini 2.5 Pro模型
+
+# 阿里云OSS配置（可选，用于图片上传）
+aliyun_oss:
+  access_key: "YOUR_ACCESS_KEY"
+  secret_key: "YOUR_SECRET_KEY"
+  bucket: "YOUR_BUCKET_NAME"
+  endpoint: "http://oss-cn-beijing.aliyuncs.com"
+
+# 系统配置
+system:
+  max_concurrent_requests: 5  # 最大并发请求数
+  retry_times: 3  # 重试次数
+  timeout: 60  # 请求超时时间（秒）
+
+# 路径配置
+paths:
+  raw_articles: "data/raw_articles"
+  markdown: "data/markdown"
+  images: "data/images"
+  themes: "data/themes"
+  output: "data/output"

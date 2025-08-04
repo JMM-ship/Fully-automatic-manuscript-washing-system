@@ -1,0 +1,41 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+.env
+
+# 数据文件
+wechat_automation/data/
+*.html
+*.md
+!README.md
+!CLAUDE.md
+
+# 配置文件（包含API密钥）
+wechat_automation/config/config.yaml
+
+# 旧版系统
+wechat_spider-main/
+wechat_format-main/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# 日志
+*.log
+
+# 临时文件
+*.tmp
+*.temp
