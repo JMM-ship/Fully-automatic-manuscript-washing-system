@@ -30,21 +30,54 @@ gemini:
   api_key: "YOUR_GEMINI_API_KEY"
 ```
 
-### 3. 准备文章链接
+### 3. 运行完整流程
 
+有两种运行模式：
+
+#### 自动流程（适合熟练用户）
+
+##### 方式一：交互式输入
+```bash
+# 直接运行，按提示输入URL
+python main.py process
+
+# 或使用 -i 参数
+python main.py process -i
+```
+
+##### 方式二：从文件读取
 创建一个文本文件（如 `urls.txt`），每行一个公众号文章链接：
-
 ```
 https://mp.weixin.qq.com/s/xxxxx
 https://mp.weixin.qq.com/s/yyyyy
 ```
 
-### 4. 运行完整流程
-
+然后运行：
 ```bash
-# 一键处理：爬取->转换->分类->提取素材
 python main.py process urls.txt
 ```
+
+#### 带审核流程（推荐新用户使用）
+
+为确保每个阶段的质量，提供了带人工审核的版本：
+
+```bash
+# 交互式输入
+python main.py process-with-review
+
+# 从文件读取
+python main.py process-with-review urls.txt
+```
+
+在带审核模式下，每个阶段完成后会：
+- 显示处理结果的预览
+- 提供以下选项：
+  - [c] 继续下一步
+  - [r] 重新执行当前步骤
+  - [v] 查看更多详情（部分阶段）
+  - [e] 编辑结果（部分阶段）
+  - [s] 跳过后续步骤
+  - [q] 退出程序
 
 ## 使用指南
 
@@ -76,7 +109,10 @@ python main.py publish "主题名称" "草稿文件路径"
 ## 单独运行各模块
 
 ```bash
-# 爬取文章
+# 爬取文章（交互式输入）
+python main.py crawl
+
+# 爬取文章（从文件读取）
 python main.py crawl urls.txt
 
 # 转换格式

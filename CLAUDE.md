@@ -20,8 +20,15 @@ pip install -r requirements.txt
 # 配置Gemini API密钥
 # 编辑 config/config.yaml 添加您的API密钥
 
-# 一键处理流程
+# 一键处理流程（交互式输入URL）
+python main.py process
+
+# 或从文件读取URL
 python main.py process urls.txt
+
+# 带人工审核的处理流程（推荐新手使用）
+python main.py process-with-review
+python main.py process-with-review urls.txt
 
 # 查看所有主题
 python main.py list-themes
@@ -77,6 +84,12 @@ python main.py publish "主题名称" "草稿路径"
 ```
 爬取URL -> HTML转Markdown -> 智能分类 -> 提取素材 -> AI创作 -> 优化润色 -> 智能配图 -> 发布准备
 ```
+
+**质量控制**：系统提供带人工审核的流程（`process-with-review`命令），在每个阶段完成后：
+- 展示处理结果预览
+- 允许重做、跳过或编辑
+- 确保每个环节的输出质量
+- 特别适合系统初期使用和质量验证
 
 ### 提示词系统
 所有AI相关的提示词都存储在 `config/prompts/` 目录下：
