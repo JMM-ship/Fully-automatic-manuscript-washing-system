@@ -385,14 +385,15 @@ def process_with_review(urls_file, interactive):
             click.echo("\n主题分类结果：")
             
             for theme in classification['themes']:
-                click.echo(f"\n📁 {theme['name']}")
-                click.echo(f"   描述：{theme['description']}")
-                click.echo(f"   文章数：{theme['article_count']}")
+                click.echo(f"\n📁 {theme.get('theme_name', '未命名主题')}")
+                click.echo(f"   描述：{theme.get('description', '无描述')}")
+                click.echo(f"   文章数：{len(theme.get('articles', []))}")
                 click.echo(f"   文章列表：")
-                for article in theme['articles'][:3]:  # 只显示前3篇
+                articles = theme.get('articles', [])
+                for article in articles[:3]:  # 只显示前3篇
                     click.echo(f"     - {article}")
-                if len(theme['articles']) > 3:
-                    click.echo(f"     ... 还有 {len(theme['articles']) - 3} 篇")
+                if len(articles) > 3:
+                    click.echo(f"     ... 还有 {len(articles) - 3} 篇")
     
     # 审核分类结果
     while True:
