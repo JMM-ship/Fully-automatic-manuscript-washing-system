@@ -1,12 +1,25 @@
-requests>=2.31.0
-beautifulsoup4>=4.12.2
-markdownify>=0.11.6
-google-generativeai>=0.3.0
-aiohttp>=3.9.0
-pyyaml>=6.0.1
-tqdm>=4.66.1
-pillow>=10.0.0
-lxml>=4.9.3
-asyncio>=3.4.3
-click>=8.1.7
-colorama>=0.4.6
+# 公众号内容自动化系统依赖包
+# 使用方法: pip install -r requirements.txt
+
+# 网络请求和爬虫相关
+requests>=2.31.0          # HTTP请求库，用于下载网页和图片
+aiohttp>=3.9.0           # 异步HTTP客户端，用于并发爬取
+beautifulsoup4>=4.12.2   # HTML解析库，用于提取网页内容
+lxml>=4.9.3              # HTML/XML解析器，BeautifulSoup的后端
+
+# 文本处理
+markdownify>=0.11.6      # HTML转Markdown工具
+
+# AI模型接口
+google-generativeai>=0.3.0  # Google Gemini API客户端
+
+# 图像处理
+pillow>=10.0.0           # Python图像处理库，用于图片分析
+
+# 配置和数据处理
+pyyaml>=6.0.1            # YAML配置文件解析
+
+# 命令行工具
+click>=8.1.7             # 命令行接口框架
+tqdm>=4.66.1             # 进度条显示
+colorama>=0.4.6          # 终端彩色输出（Windows兼容）

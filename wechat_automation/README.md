@@ -17,9 +17,50 @@
 
 ### 1. 安装依赖
 
+#### 方法一：一键安装脚本（最简单）
+
+**macOS/Linux:**
 ```bash
+./install.sh
+```
+
+**Windows:**
+```bash
+install.bat
+```
+
+脚本将自动：
+- 检查Python版本
+- 创建虚拟环境（可选）
+- 安装所有依赖
+- 创建必要的目录结构
+- 复制配置文件模板
+
+#### 方法二：手动安装
+```bash
+# 创建虚拟环境
+python3 -m venv venv
+
+# 激活虚拟环境
+# macOS/Linux:
+source venv/bin/activate
+# Windows:
+venv\Scripts\activate
+
+# 安装依赖
 pip install -r requirements.txt
 ```
+
+#### 依赖包说明
+- **requests & aiohttp**: 网络请求和异步爬虫
+- **beautifulsoup4 & lxml**: HTML解析和内容提取
+- **markdownify**: HTML转Markdown
+- **google-generativeai**: Google Gemini AI接口
+- **pillow**: 图片处理和分析
+- **pyyaml**: 配置文件读取
+- **click**: 命令行界面
+- **tqdm**: 进度条显示
+- **colorama**: 跨平台彩色输出
 
 ### 2. 配置 API
 
@@ -30,7 +71,37 @@ gemini:
   api_key: "YOUR_GEMINI_API_KEY"
 ```
 
-### 3. 运行完整流程
+### 3. 运行系统
+
+#### 使用启动脚本（推荐）
+
+启动脚本会自动检测并激活虚拟环境：
+
+**macOS/Linux:**
+```bash
+./run.sh process
+./run.sh process-with-review
+./run.sh list-themes
+```
+
+**Windows:**
+```bash
+run.bat process
+run.bat process-with-review
+run.bat list-themes
+```
+
+#### 手动运行（如果已激活虚拟环境）
+
+如果已经激活了虚拟环境，可以直接使用python命令：
+
+```bash
+# 激活虚拟环境后
+python main.py process
+python main.py process -i
+```
+
+### 4. 运行模式
 
 有两种运行模式：
 
@@ -38,11 +109,11 @@ gemini:
 
 ##### 方式一：交互式输入
 ```bash
-# 直接运行，按提示输入URL
-python main.py process
+# macOS/Linux
+./run.sh process
 
-# 或使用 -i 参数
-python main.py process -i
+# Windows
+run.bat process
 ```
 
 ##### 方式二：从文件读取
@@ -54,7 +125,11 @@ https://mp.weixin.qq.com/s/yyyyy
 
 然后运行：
 ```bash
-python main.py process urls.txt
+# macOS/Linux
+./run.sh process urls.txt
+
+# Windows
+run.bat process urls.txt
 ```
 
 #### 带审核流程（推荐新用户使用）
@@ -62,11 +137,15 @@ python main.py process urls.txt
 为确保每个阶段的质量，提供了带人工审核的版本：
 
 ```bash
-# 交互式输入
-python main.py process-with-review
+# 交互式输入（macOS/Linux）
+./run.sh process-with-review
+
+# 交互式输入（Windows）
+run.bat process-with-review
 
 # 从文件读取
-python main.py process-with-review urls.txt
+./run.sh process-with-review urls.txt  # macOS/Linux
+run.bat process-with-review urls.txt   # Windows
 ```
 
 在带审核模式下，每个阶段完成后会：
@@ -84,48 +163,65 @@ python main.py process-with-review urls.txt
 ### 查看可用主题
 
 ```bash
-python main.py list-themes
+# macOS/Linux
+./run.sh list-themes
+
+# Windows
+run.bat list-themes
 ```
 
 ### 创作新文章
 
 ```bash
 # 默认创作一篇
-python main.py create "主题名称"
+./run.sh create "主题名称"         # macOS/Linux
+run.bat create "主题名称"          # Windows
 
 # 交互式创作
-python main.py create "主题名称" -i
+./run.sh create "主题名称" -i      # macOS/Linux
+run.bat create "主题名称" -i       # Windows
 
 # 批量创作3篇
-python main.py create "主题名称" -b 3
+./run.sh create "主题名称" -b 3    # macOS/Linux
+run.bat create "主题名称" -b 3     # Windows
 ```
 
 ### 准备发布
 
 ```bash
-python main.py publish "主题名称" "草稿文件路径"
+# macOS/Linux
+./run.sh publish "主题名称" "草稿文件路径"
+
+# Windows
+run.bat publish "主题名称" "草稿文件路径"
 ```
 
 ## 单独运行各模块
 
 ```bash
 # 爬取文章（交互式输入）
-python main.py crawl
+./run.sh crawl              # macOS/Linux
+run.bat crawl               # Windows
 
 # 爬取文章（从文件读取）
-python main.py crawl urls.txt
+./run.sh crawl urls.txt     # macOS/Linux
+run.bat crawl urls.txt      # Windows
 
 # 转换格式
-python main.py convert
+./run.sh convert            # macOS/Linux
+run.bat convert             # Windows
 
 # 文章分类
-python main.py classify
+./run.sh classify           # macOS/Linux
+run.bat classify            # Windows
 
 # 提取素材
-python main.py extract
+./run.sh extract            # macOS/Linux
+run.bat extract             # Windows
 
 # 图片标签
-python main.py tag-images
+./run.sh tag-images         # macOS/Linux
+run.bat tag-images          # Windows
 ```
 
 ## 项目结构
@@ -156,12 +252,22 @@ wechat_automation/
 3. **创作阶段**：基于素材库AI创作、优化语言
 4. **发布阶段**：智能配图、格式化输出
 
+## 系统要求
+
+- Python 3.9 或更高版本
+- 稳定的网络连接（访问 Gemini API）
+- 至少 2GB 可用磁盘空间（存储文章和图片）
+
 ## 注意事项
 
-- 需要稳定的网络连接以访问 Gemini API
-- 建议使用 Python 3.9 或更高版本
 - 首次运行可能需要较长时间进行图片分析
 - API 调用有速率限制，请合理使用
+- 建议在虚拟环境中运行，避免依赖冲突
+- Windows 用户可能需要安装 Microsoft Visual C++ 14.0
+
+## 遇到问题？
+
+请查看 [故障排除指南](TROUBLESHOOTING.md)
 
 ## 后续优化建议
 

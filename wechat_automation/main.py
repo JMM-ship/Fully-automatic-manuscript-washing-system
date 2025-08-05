@@ -257,18 +257,23 @@ def process_with_review(urls_file, interactive):
     
     # 执行爬取
     crawler = WechatCrawler()
-    asyncio.run(crawler.crawl_articles(urls))
+    results = asyncio.run(crawler.crawl_articles(urls))
     
     # 显示爬取结果
     raw_articles_path = Path("data/raw_articles")
-    if raw_articles_path.exists():
-        articles = list(raw_articles_path.glob("*.html"))
-        click.echo(f"\n✅ 爬取完成！共获取 {len(articles)} 篇文章")
+    if results:
+        click.echo(f"\n✅ 爬取成功！共获取 {len(results)} 篇文章")
         click.echo("文章列表：")
-        for article in articles[:5]:  # 只显示前5篇
-            click.echo(f"  - {article.name}")
-        if len(articles) > 5:
-            click.echo(f"  ... 还有 {len(articles) - 5} 篇")
+        for result in results[:5]:  # 只显示前5篇
+            click.echo(f"  - {result['title']} ({result['id']})")
+        if len(results) > 5:
+            click.echo(f"  ... 还有 {len(results) - 5} 篇")
+    else:
+        click.echo("\n❌ 爬取失败！未获取到任何文章")
+        click.echo("请检查：")
+        click.echo("  1. 网络连接是否正常")
+        click.echo("  2. URL是否有效")
+        click.echo("  3. 查看上方的错误信息")
     
     # 审核爬取结果
     while True:
@@ -277,10 +282,25 @@ def process_with_review(urls_file, interactive):
                              default='c')
         
         if action == 'c':
+            if not results:
+                click.echo("警告：没有成功爬取的文章，后续步骤可能无法正常执行")
+                if not click.confirm("确定要继续吗？"):
+                    continue
             break
         elif action == 'r':
             click.echo("重新执行爬取...")
-            asyncio.run(crawler.crawl_articles(urls))
+            results = asyncio.run(crawler.crawl_articles(urls))
+            
+            # 重新显示结果
+            if results:
+                click.echo(f"\n✅ 爬取成功！共获取 {len(results)} 篇文章")
+                click.echo("文章列表：")
+                for result in results[:5]:
+                    click.echo(f"  - {result['title']} ({result['id']})")
+                if len(results) > 5:
+                    click.echo(f"  ... 还有 {len(results) - 5} 篇")
+            else:
+                click.echo("\n❌ 爬取失败！未获取到任何文章")
             continue
         elif action == 's':
             click.echo("跳过后续步骤")

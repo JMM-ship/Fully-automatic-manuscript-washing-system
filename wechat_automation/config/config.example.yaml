@@ -1,7 +1,7 @@
 # API配置
 gemini:
   api_key: "YOUR_GEMINI_API_KEY"  # 请替换为您的Gemini API密钥
-  model: "gemini-2.0-flash-exp"  # 使用Gemini 2.5 Pro模型
+  model: "gemini-2.5-pro"  # 使用Gemini 2.5 Pro模型
 
 # 阿里云OSS配置（可选，用于图片上传）
 aliyun_oss:
